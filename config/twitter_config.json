@@ -1,0 +1,7 @@
+{
+	"consumerKey": "e055nP3x0I3lsByumWfF9LY4B",
+	"consumerSecret": "BUZPpgOCclIC2qgx6MEqGnR8zLbcgbUo66V2K0gyydwrSzTEcO",
+	"accessToken": "600953730-2FRahCro5AGGqUJgvzJn4huJMxflMs0rFODFV4eM",
+	"accessTokenSecret": "uO2gpRmYOvGIGowwfkr2D4fYp91rgu79X0xkmN7SVCDRA",
+	"callBackUrl": "http://localhost:3000/messenger"
+}
