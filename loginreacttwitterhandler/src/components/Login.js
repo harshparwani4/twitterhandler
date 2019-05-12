@@ -19,7 +19,7 @@ class Login extends Component {
     }
 
     onSubmit= (e)=> {
-        e.preventDefault()
+        e.preventDefault();
 
         const user = {
             email: this.state.email,
@@ -30,17 +30,24 @@ class Login extends Component {
          if(res.error){
             this.setState({
                 message:res.error
-            })
+            });
 
         }
         else {
-                this.props.history.push(`/twitter`)
-        }   
-        });
-        
-    }
+
+            const {state:{prevLocation}={}}=this.props.location;
+            console.log(prevLocation);
+            console.log('prevLocation',prevLocation);
+                this.props.history.push(prevLocation || '/twitter');
+
+            this.props.setTriggerUpdate(1);
+               console.log('props', this.props);
+            }
+        })   
+        }
 
     render () {
+
         const {showButton = true} = this.props;
             return (
             <div className="container">

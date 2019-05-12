@@ -59,7 +59,7 @@ class Messenger extends Component{
 		}
 
 		else{
-			window.location.replace('/messenger');
+			this.props.history.push('/messenger');
 		}
 
 		}

@@ -1,55 +1,41 @@
-import React, { useState, useEffect } from 'react'
 import Register from './Register';
-import {accessGranted} from './UserFunctions';
 import Login from './Login';
+
+import React from 'react'
+
+import {Redirect} from 'react-router';
 
 export default function Landing(props) {
             
-          let [isUserAuthenticated, setIsUserAuthenticated] = useState(null);  
-        useEffect(()=>{
+    
+    const {location:{state={}}={}, isUserAuthenticated} = props;
 
-
-        const userToken = window.localStorage.getItem('usertoken') ;
-
-        if(userToken){
-        const request={authorization:userToken};
-        accessGranted(request).then(res=>{
-         if(res.error){
-            setIsUserAuthenticated(false);
-        }
-        else{
-            setIsUserAuthenticated(true);
-        }
-    });
-    }
-
-    else{
-
-    setIsUserAuthenticated(false);
-    }
-        // eslint-disable-next-line react-hooks/exhaustive-deps 
-     },[]);
-
-        const reRoute = ()=>{
-            props.history.push('/twitter');
-        }
-
-
+    console.log('isUserAuthenticated',isUserAuthenticated, state);
+    const {error}=state;          
         return (
-                isUserAuthenticated===null?(<h2>Loading</h2>):
-                (
-                    <div>
+            isUserAuthenticated===null?(<h2>Loading</h2>):(
+                <div>
                 {
-                    !isUserAuthenticated?(<div className="container">
+                !isUserAuthenticated?<div className="container">
                 <div className="jumbotron row">
+                   
                     <div className="col-sm-6 col-xs-6">
-                        <Register/>
-                        </div>
-                        <div className="col-sm-6 col-xs-3">
-                        <Login/>
-                        </div>
+                        <Register {...props}/>
+                    </div>
+                    <div className="col-sm-6 col-xs-3">
+                        <Login {...props} setTriggerUpdate={props.setTriggerUpdate}/>
+                    </div>
+                     {
+
+                        error?(<div className="col-sm-6 col-xs-6 text-center">{error}</div>):null
+                    }
                 </div>
-            </div>):<div>{reRoute()}</div>}
-                    </div>)
+            </div>:(
+                <Redirect to={{
+                            pathname:'/twitter',
+                        }}/>
+                        )
+        }
+            </div>)
         )
 }

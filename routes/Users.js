@@ -77,7 +77,9 @@ users.post('/profile', (req, res) => {
         console.log(err, authorizedData);
         if(err){
                 console.log('ERROR: Could not connect to the protected route');
-                res.json({error:err.message});
+                console.log(err.message);
+                    res.json({error:err.message});
+                
             } else {
                 res.json({
                     message: 'Successful logged in'
