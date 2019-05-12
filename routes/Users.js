@@ -70,23 +70,21 @@ users.post('/login', (req, res) => {
         })
 })
 
-users.get('/profile', (req, res) => {
-    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+users.post('/profile', (req, res) => {
 
-    User.findOne({
-        _id: decoded._id
-    })
-        .then(user => {
-            if (user) {
-                res.json(user)
+    console.log(req.body);
+    var decoded = jwt.verify(req.body['authorization'], process.env.SECRET_KEY, (err, authorizedData)=>{
+        console.log(err, authorizedData);
+        if(err){
+                console.log('ERROR: Could not connect to the protected route');
+                res.json({error:err.message});
             } else {
-                res.send("User does not exist")
+                res.json({
+                    message: 'Successful logged in'
+                });
             }
-        })
-        .catch(err => {
-            res.send('error: ' + err)
-        })
-})
+    });
+});
 
 const twitter=new Twitter(config);
 

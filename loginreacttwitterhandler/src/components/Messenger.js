@@ -42,7 +42,6 @@ class Messenger extends Component{
 					sessionStorage.setItem('access_token',accessToken);
 					sessionStorage.setItem('access_token_secret', accessTokenSecret);
 					const userInfo= await verifyCred(config)
-					console.log('userInfo', userInfo);
 
 					let directMessageList = await directMessage({count:10});
 
@@ -113,19 +112,16 @@ class Messenger extends Component{
 				const DataAcc = acc['DataAcc'];
 				if(uniqueNameObj[name]===undefined){
 				uniqueNameObj[name]=1;
-				console.log('name',name);
 				DataAcc.push(eachData);
 			}
 				return {...acc, uniqueName:uniqueNameObj, DataAcc};
 			},{});
 
-			console.log('modifiedData',modifiedData);
 		 
 
 
 		return	modifiedData.map(userData => (
-    			
-					<UserCard onCardClick={this.getCurrentSelectedData} userData={userData} />
+					<UserCard onCardClick={this.getCurrentSelectedData} key={userData.user.id_str} userData={userData} />
 					
   ))}
 

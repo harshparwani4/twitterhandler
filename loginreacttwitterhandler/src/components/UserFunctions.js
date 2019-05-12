@@ -40,7 +40,16 @@ export const statuses = req => {
 }
 
 
+export const accessGranted = req =>{
 
+ return axios.post('users/profile', req).then(res => {
+            console.log('res', res.data);
+            return res.data;
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 export const requestToken =  () =>{
     return axios.get('users/twitter/oauth/request_token').then(res => {
             return res.data;

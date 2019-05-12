@@ -1,17 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Register from './Register';
+import {accessGranted} from './UserFunctions';
 import Login from './Login';
 
 export default function Landing(props) {
-        const isLocalStoragePresent = !!window.localStorage.getItem('usertoken') ;
+            
+          let [isUserAuthenticated, setIsUserAuthenticated] = useState(null);  
+        useEffect(()=>{
+
+
+        const userToken = window.localStorage.getItem('usertoken') ;
+
+        if(userToken){
+        const request={authorization:userToken};
+        accessGranted(request).then(res=>{
+         if(res.error){
+            setIsUserAuthenticated(false);
+        }
+        else{
+            setIsUserAuthenticated(true);
+        }
+    });
+    }
+
+    else{
+
+    setIsUserAuthenticated(false);
+    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
+     },[]);
 
         const reRoute = ()=>{
-
-            console.log('Inside123');
             props.history.push('/twitter');
         }
+
+
         return (
-            !isLocalStoragePresent?(<div className="container">
+                isUserAuthenticated===null?(<h2>Loading</h2>):
+                (
+                    <div>
+                {
+                    !isUserAuthenticated?(<div className="container">
                 <div className="jumbotron row">
                     <div className="col-sm-6 col-xs-6">
                         <Register/>
@@ -20,6 +49,7 @@ export default function Landing(props) {
                         <Login/>
                         </div>
                 </div>
-            </div>):<div>{reRoute()}</div>
+            </div>):<div>{reRoute()}</div>}
+                    </div>)
         )
 }

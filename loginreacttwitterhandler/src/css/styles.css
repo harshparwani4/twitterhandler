@@ -52,8 +52,6 @@ overflow:auto;
 
 
 #chat-screen{
-	background: linear-gradient(rgba(242, 182, 50, 0,.85), rgba(242, 182, 50, 0,.85)), url("bg.jpeg") center no-repeat;
-	background-size: cover;
 	flex:1;
 }
 

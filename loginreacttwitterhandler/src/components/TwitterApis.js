@@ -5,7 +5,6 @@ import { statuses, requestToken, accessToken, verifyCredentials, directMessageEv
 
 export const getStatus= (req)=> {
         const response=statuses(req);
-        console.log('response',response)
         return response;
         }
 
